@@ -1,22 +1,12 @@
 package main
 
 import (
-	"os"
+	"global"
 	"strconv"
 	"strings"
 )
 
-// Read contents from input file and return as a set of lines
-func load(file string) []string {
-	bytes, err := os.ReadFile(file)
-	if err != nil {
-		panic(err)
-	}
-	lines := strings.Split(string(bytes), "\n")
-	return lines[:len(lines)-1]
-}
-
-// Read contents from input file and return as a set of lines
+// Read a report line and extract levels
 func levels(report string) []int {
 	levelValues := strings.Fields(report)
 	var levels []int
@@ -34,6 +24,7 @@ func test(arr []int) bool {
 	return isMonotonic(arr) && isSafe(arr)
 }
 
+// Check if report is continuously increasing or continuously decreasing.
 func isMonotonic(arr []int) bool {
 	isMonotonic := false
 	for i := 0; i < len(arr)-2; i++ {
@@ -47,19 +38,13 @@ func isMonotonic(arr []int) bool {
 	return isMonotonic
 }
 
+// Check if levels are safe (as per logic defined in the puzzles)
 func isSafe(numbers []int) bool {
 	for i := 0; i < len(numbers)-1; i++ {
-		diff := abs(numbers[i] - numbers[i+1])
+		diff := global.Abs(numbers[i] - numbers[i+1])
 		if diff < 1 || diff > 3 {
 			return false
 		}
 	}
 	return true
-}
-
-func abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
 }

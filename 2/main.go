@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"global"
 	"os"
 )
 
@@ -13,7 +14,7 @@ func main() {
 		os.Exit(-1)
 	}
 	file := os.Args[1]
-	reports := load(file)
+	reports := global.Load(file)
 	fmt.Println("--- Puzzle 1 ---")
 	one(reports)
 	fmt.Println("--- Puzzle 2 ---")
