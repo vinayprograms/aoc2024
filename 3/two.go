@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"global"
 	"strings"
 )
 
 func two(lines []string) {
-	result := 0
 	text := merge(lines)
 	if len(strings.TrimSpace(text)) == 0 {
 		return
@@ -27,6 +27,6 @@ func two(lines []string) {
 		}
 		return filtered_tokens
 	})
-	result += calculate(filtered)
-	fmt.Println("RESULT:", result)
+	results := calculate(filtered)
+	fmt.Println("RESULT:", global.Sum(results))
 }

@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"global"
 )
 
 func one(lines []string) {
 	text := merge(lines)
 	tokens := tokenize(text, `mul\(\d+,\d+\)`)
-	result := calculate(tokens)
-	fmt.Println("RESULT:", result)
+	results := calculate(tokens)
+	fmt.Println("RESULT:", global.Sum(results))
 }

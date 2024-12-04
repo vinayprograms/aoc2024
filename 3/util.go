@@ -27,8 +27,8 @@ func filter(tokens []string, filterFunc func([]string) []string) []string {
 }
 
 // Calculate the total by processing 'mul(a,b)' instructions
-func calculate(instructions []string) int {
-	total := 0
+func calculate(instructions []string) []int {
+	results := []int{}
 	for _, instr := range instructions {
 		re := regexp.MustCompile(`\d+`)
 		numbers := re.FindAllString(instr, 2) // instruction must contain only two numbers
@@ -37,8 +37,8 @@ func calculate(instructions []string) int {
 		} else if b, err := strconv.Atoi(numbers[1]); err != nil {
 			panic(err)
 		} else {
-			total += a * b
+			results = append(results, a*b)
 		}
 	}
-	return total
+	return results
 }
