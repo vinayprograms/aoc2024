@@ -8,7 +8,6 @@ import (
 func one(lines []string) {
 	runningTotal := 0
 	for _, l := range lines {
-		//l := lines[len(lines)-1]
 		parts := strings.Split(strings.TrimSpace(l), ":")
 		items := strings.Split(strings.TrimSpace(parts[1]), " ")
 		fmt.Println("RESULT:", parts[0], "EQN:", items)

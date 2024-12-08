@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 )
 
 func generateOperators(operators []string, count int) [][]string {
 	comboCount := int(math.Pow(float64(len(operators)), float64(count)))
-	fmt.Println("Total combos:", comboCount)
+	//fmt.Println("Total combos:", comboCount)
 	operatorSets := make([][]string, comboCount)
 	for i := 0; i < count; i++ {
 		for j := 0; j < comboCount; j++ {
@@ -43,7 +42,7 @@ func assemble(nums []string, sets [][]string) [][]string {
 
 func check(expected string, equations [][]string, opsMap map[string]func(int, int) int) (bool, int) {
 	for _, eqn := range equations {
-		fmt.Println(eqn)
+		//fmt.Println(eqn)
 		result, err := strconv.Atoi(eqn[0])
 		if err != nil {
 			panic(err)
