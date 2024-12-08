@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	g "global"
+)
 
 func two(lines []string) {
 	values := []string{}
@@ -10,7 +13,7 @@ func two(lines []string) {
 		}
 	}
 
-	m := Map[string]{}
+	m := g.Map[string]{}
 	dimensions := []int{len(lines[0]), len(lines)}
 	m.Build(dimensions, values)
 	count := 0
@@ -23,12 +26,12 @@ func two(lines []string) {
 	fmt.Println("COUNT:", count)
 }
 
-func findX_MAS(start Point, m Map[string]) bool {
-	offsets := [4]Vector{
-		Vector{deltas: []int{-1, -1}}, // "M"
-		Vector{deltas: []int{-1, 1}},  // "S"
-		Vector{deltas: []int{1, 1}},   // "S"
-		Vector{deltas: []int{1, -1}},  // "M"
+func findX_MAS(start g.Point, m g.Map[string]) bool {
+	offsets := [4]g.Vector{
+		g.Vector{Deltas: []int{-1, -1}}, // "M"
+		g.Vector{Deltas: []int{-1, 1}},  // "S"
+		g.Vector{Deltas: []int{1, 1}},   // "S"
+		g.Vector{Deltas: []int{1, -1}},  // "M"
 	}
 	if matchPositions(start, m, offsets) {
 		return true
@@ -48,7 +51,7 @@ func findX_MAS(start Point, m Map[string]) bool {
 	return false
 }
 
-func matchPositions(start Point, m Map[string], offsets [4]Vector) bool {
+func matchPositions(start g.Point, m g.Map[string], offsets [4]g.Vector) bool {
 	if match(start, offsets[0], m, "M") &&
 		match(start, offsets[1], m, "S") &&
 		match(start, offsets[2], m, "S") &&
@@ -59,18 +62,20 @@ func matchPositions(start Point, m Map[string], offsets [4]Vector) bool {
 	}
 }
 
-func match(start Point, offset Vector, m Map[string], str string) bool {
-	if pos, err := m.Move(start, offset); err != nil {
+func match(start g.Point, offset g.Vector, m g.Map[string], str string) bool {
+	if pos := m.Move(start, offset); len(pos.Coordinates) == 0 {
 		return false
-	} else if m.ValueAt(pos) == str {
-		return true
 	} else {
-		return false
+		if v, err := m.ValueAt(pos); err == nil && v == str {
+			return true
+		} else {
+			return false
+		}
 	}
 }
 
-func rotateGrid(v [4]Vector) [4]Vector {
-	return [4]Vector{
+func rotateGrid(v [4]g.Vector) [4]g.Vector {
+	return [4]g.Vector{
 		rotate90(v[0]),
 		rotate90(v[1]),
 		rotate90(v[2]),
@@ -79,12 +84,12 @@ func rotateGrid(v [4]Vector) [4]Vector {
 }
 
 // Rotate vector clockwise by 90 degrees
-func rotate90(v Vector) Vector {
-	if len(v.deltas) != 2 {
+func rotate90(v g.Vector) g.Vector {
+	if len(v.Deltas) != 2 {
 		panic("rotate90 only works on 2D vectors")
 	}
-	return Vector{deltas: []int{
-		(0 * v.deltas[0]) + (-1 * v.deltas[1]),
-		(1 * v.deltas[0]) + (0 * v.deltas[1]),
+	return g.Vector{Deltas: []int{
+		(0 * v.Deltas[0]) + (-1 * v.Deltas[1]),
+		(1 * v.Deltas[0]) + (0 * v.Deltas[1]),
 	}}
 }
