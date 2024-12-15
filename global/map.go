@@ -1,6 +1,10 @@
 package global
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 ////////////////////
 // n-dimensional point
@@ -13,6 +17,43 @@ type Point struct {
 // Helper function to convert Point to a string key for use in `Map`
 func (p Point) String() string {
 	return fmt.Sprint(p.Coordinates) // Example: "[1 2 3]"
+}
+
+func PointFromString(str string) (p Point) {
+	p.Coordinates = []int{}
+	str = str[1 : len(str)-1]
+	values := strings.Split(str, " ")
+	for _, v := range values {
+		if x, err := strconv.Atoi(v); err != nil {
+			panic(err)
+		} else {
+			p.Coordinates = append(p.Coordinates, x)
+		}
+	}
+	return p
+}
+
+func IsSamePoint(p1 Point, p2 Point) bool {
+	if len(p1.Coordinates) != len(p2.Coordinates) {
+		panic("Cannot compare points with different dimensions")
+	}
+	for i := 0; i < len(p1.Coordinates); i++ {
+		if p1.Coordinates[i] != p2.Coordinates[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+func Distance(first Point, second Point) (v Vector) {
+	if len(first.Coordinates) != len(second.Coordinates) {
+		panic("Cannot compare points with different dimensions")
+	}
+	for i := 0; i < len(first.Coordinates); i++ {
+		v.Deltas = append(v.Deltas, second.Coordinates[i]-first.Coordinates[i])
+	}
+	return
 }
 
 ////////////////////
