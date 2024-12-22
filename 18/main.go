@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Day 12: RAM Run")
+	fmt.Println("Day 18: RAM Run")
 	if len(os.Args) < 2 {
 		fmt.Println("Must supply input file.")
 		os.Exit(-1)
