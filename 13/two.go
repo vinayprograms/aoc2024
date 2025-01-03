@@ -6,7 +6,7 @@ func two(lines []string) {
 	total := 0
 	fixed := fixGames(getGames(lines))
 
-	// For puzzle 2, we'll use Euler's formula to solve simultaneous equations
+	// For puzzle 2, we'll use Cramer's formula to solve simultaneous equations
 	for _, g := range fixed {
 		matrix := [2][2]int{
 			{g.a[0], g.b[0]},
